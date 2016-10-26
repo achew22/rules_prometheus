@@ -1,0 +1,6 @@
+bazel-bin
+bazel-genfiles
+bazel-out
+bazel-rules_prometheus
+bazel-testlogs
+
