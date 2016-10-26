@@ -8,3 +8,6 @@ load("@io_bazel_rules_go//go:def.bzl", "go_repositories")
 
 go_repositories()
 
+load("//prometheus:def.bzl", "prometheus_repositories")
+
+prometheus_repositories()
