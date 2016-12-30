@@ -42,7 +42,7 @@ prometheus_alert_test = rule(
     implementation = prometheus_alert_test_impl,
     attrs = {
         "srcs": attr.label_list(allow_files=True),
-        "_promtool": attr.label(executable=True, allow_files=True,
+        "_promtool": attr.label(executable=True, allow_files=True, cfg="host",
                                   default=Label("@com_github_prometheus_prometheus//cmd/promtool"))
     },
 )
@@ -52,7 +52,7 @@ def prometheus_repositories():
     new_go_repository(
         name = "com_github_prometheus_prometheus",
         importpath = "github.com/prometheus/prometheus",
-        tag = "v1.2.1"
+        tag = "v1.4.1"
     )
 
     new_go_repository(
