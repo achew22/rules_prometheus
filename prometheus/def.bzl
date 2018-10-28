@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_repositories", "go_repository")
+load("@bazel_gazelle//:deps.bzl", "go_repository")
 
 BASH_TEMPLATE = """
 #! /usr/bin/env bash
