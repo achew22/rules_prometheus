@@ -14,7 +14,7 @@ First load this repo in the
 git_repository(
     name = "com_github_achew22_rules_prometheus",
     remote = "https://github.com/achew22/rules_prometheus",
-    commit = "b13b3f14e78ee3a919d09ea152c82419837926a1",
+    commit = "6e4c1d2df198f83ea87222e3e158e649573623d5",
 )
 
 load("@com_github_achew22_rules_prometheus//prometheus:def.bzl", "prometheus_repositories")
