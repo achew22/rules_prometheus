@@ -3,7 +3,7 @@ load("@bazel_gazelle//:deps.bzl", "go_repository")
 BASH_TEMPLATE = """
 #! /usr/bin/env bash
 
-exec {promtool} check-rules {rules_paths} $@ """
+exec {promtool} {command} {rules_paths} $@"""
 
 def prometheus_alert_test_impl(ctx):
     # Arguments to call the test with.
@@ -19,6 +19,7 @@ def prometheus_alert_test_impl(ctx):
             # satisfy both but I can't figure it out right now.
             promtool = promtool.short_path,
             rules_paths = " ".join(args),
+            command = ctx.attr.command,
         ),
         executable = True,
         output = ctx.outputs.executable,
@@ -37,7 +38,7 @@ Args:
   srcs: Array<Label>; The list of targets to use as input
 """
 
-prometheus_alert_test = rule(
+promtool_command_test = rule(
     attrs = {
         "srcs": attr.label_list(allow_files = True),
         "_promtool": attr.label(
@@ -46,10 +47,18 @@ prometheus_alert_test = rule(
             cfg = "host",
             default = Label("@com_github_prometheus_prometheus//cmd/promtool"),
         ),
+        "command": attr.string(default = "check rules"),
     },
     test = True,
     implementation = prometheus_alert_test_impl,
 )
+
+def prometheus_alert_test(name, srcs, **kwargs):
+    promtool_command_test(
+        name = name,
+        srcs = srcs,
+        **kwargs
+    )
 
 def prometheus_repositories(prometheus_version = "v2.6.0"):
     go_repository(
