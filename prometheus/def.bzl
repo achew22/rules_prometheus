@@ -11,7 +11,7 @@ def prometheus_alert_test_impl(ctx):
 
     promtool = ctx.executable._promtool
 
-    ctx.file_action(
+    ctx.actions.write(
         content = BASH_TEMPLATE.format(
             # TODO: If you use .short_path here then it works when bazel
             # testing. If you use .path then it works when you blaze build and
@@ -21,14 +21,14 @@ def prometheus_alert_test_impl(ctx):
             rules_paths = " ".join(args),
             command = ctx.attr.command,
         ),
-        executable = True,
+        is_executable = True,
         output = ctx.outputs.executable,
     )
 
     return struct(
         runfiles = ctx.runfiles(
             files = [promtool] + ctx.files.srcs,
-        )
+        ),
     )
 
 """Test that an alert is valid prometheus syntax.
